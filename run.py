@@ -1,5 +1,8 @@
 #!/usr/bin/python -tt
-
+# added lowercase key on disctionary as all examples in SOM are 
+# with upper case keys
+#  P.Skoda 8.6.2015  according to 
+#http://www.popmartian.com/tipsntricks/2014/11/20/how-to-lower-case-all-dictionary-keys-in-a-complex-python-dictionary/
 import sys
 import time
 import urllib
@@ -11,6 +14,7 @@ import commands
 import glob
 import json
 import random
+import pdb
 
 def drange(start, stop, step):
   r = start
@@ -56,12 +60,27 @@ def startProgrammDummy(cmd):
   if err != 0:
     error("bad return value of command: " + cmd)
 
+def renameKeys(x):
+   if type(x) is dict:
+     for key in x.keys():
+       x[key.lower()]=x.pop(key)
+       if type(x[key.lower()]) is dict or type(x[key.lower()]) is list:
+       	  x[key.lower()]=renameKeys(x[key.lower()])
+   elif type(x) is list:
+       for item in x:
+           item = renameKeys(item)
+   return x
+	
+
 def main():
 
   PATH = os.path.dirname(os.path.realpath(__file__))
-
   json_data = open ('config.json', 'r')
+  pdb.set_trace()
   data = json.load(json_data)
+  data = renameKeys(data)
+
+
 
   if 'RDF' in data and data['rdf']:
     startProgramm("python3 /home/voadmin/RDF/runRF.py config.json")
