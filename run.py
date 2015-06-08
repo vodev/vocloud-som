@@ -14,7 +14,7 @@ import commands
 import glob
 import json
 import random
-import pdb
+#import pdb
 
 def drange(start, stop, step):
   r = start
@@ -76,7 +76,7 @@ def main():
 
   PATH = os.path.dirname(os.path.realpath(__file__))
   json_data = open ('config.json', 'r')
-  pdb.set_trace()
+#  pdb.set_trace()
   data = json.load(json_data)
   data = renameKeys(data)
 
