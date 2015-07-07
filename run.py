@@ -32,9 +32,9 @@ def error( s ):
     sys.exit(1)
 
 def getCols(f):
-    with open(f, "r") as input_file
+    with open(f, "r") as input_file:
         line = input_file.readline()
-        return len(line.split(','))
+        return len(line.split(' '))
 
 def getRows( f ):
   os.system("wc -l "+f+" > .temp/wcl")
@@ -103,8 +103,7 @@ def main():
   data_paths = data['data']['path']
   file_type = data['data']['file_type']
   delimiter = data['data']['delimiter']
-  cols = data['data']['columns']
-
+  cols = None
   #####PARAMETERS######
 
   topology= data['parameters']['topology']
@@ -173,8 +172,8 @@ def main():
   print "Processing files: "
   for f in files:
     print "  " + f
-    if delimiter != ',':  #convert to " " delimiter
-      os.system("sed  -i 's/" + delimiter + "/,/g' " + f)
+    if delimiter != ' ':  #convert to " " delimiter
+      os.system("sed  -i 's/" + delimiter + "/ /g' " + f)
 
 
   if is_clas:  os.system( 'cp ' + clas + ' .temp/classes.shuffle')
