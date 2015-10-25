@@ -31,6 +31,11 @@ def error( s ):
     ciara()
     sys.exit(1)
 
+def getCols(f):
+    with open(f, "r") as input_file:
+        line = input_file.readline()
+        return len(line.split(' '))
+
 def getRows( f ):
   os.system("wc -l "+f+" > .temp/wcl")
   data = open('.temp/wcl')
@@ -82,9 +87,6 @@ def main():
 
 
 
-  if 'RDF' in data and data['rdf']:
-    startProgramm("python3 /home/voadmin/RDF/runRF.py config.json")
-    return 0
   #####NAME############
 
   exp_name = data['name']
@@ -101,8 +103,7 @@ def main():
   data_paths = data['data']['path']
   file_type = data['data']['file_type']
   delimiter = data['data']['delimiter']
-  cols = data['data']['columns']
-
+  cols = None
   #####PARAMETERS######
 
   topology= data['parameters']['topology']
@@ -184,12 +185,14 @@ def main():
     #cmd = getShufflerCmd(f,rows,cols,is_names,is_clas,names,clas)
     #startProgramm(cmd)
     for f in files:
+      cols = getCols(f)
       rows += getRows(f)
       cmd = 'cat ' + f + ' >> .temp/data.shuffle'       #change to stream.
       startProgrammDummy(cmd)
   else:
     cmd = 'echo "' + str(cols) + '" >> ./temp/data.shuffle'
     for f in files:
+      cols = getCols(f)
       rows += getRows(f)
       cmd = 'cat ' + f + ' >> .temp/data.shuffle'
       startProgrammDummy(cmd)
