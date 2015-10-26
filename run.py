@@ -1,21 +1,67 @@
 #!/usr/bin/python -tt
-# added lowercase key on disctionary as all examples in SOM are 
+# added lowercase key on disctionary as all examples in SOM are
 # with upper case keys
-#  P.Skoda 8.6.2015  according to 
+#  P.Skoda 8.6.2015  according to
 #http://www.popmartian.com/tipsntricks/2014/11/20/how-to-lower-case-all-dictionary-keys-in-a-complex-python-dictionary/
 import sys
 import time
-import urllib
+import urllib.request, urllib.parse, urllib.error
 import re
 import os
 import shutil
 import os.path
-import commands
+import subprocess
 import glob
 import json
 import random
 #import pdb
+import numpy as np
+import pylab as pl
+import matplotlib.pyplot as plt
+from matplotlib.gridspec import GridSpec
+import math
+from random import random
+"""
+def read_data( path ):
+  return np.loadtxt(path, delimiter=' ')
 
+def rect( A, A2, A3 ):
+
+  plt.figure(1)
+  #plt.imshow(A, interpolation='nearest')
+  plt.imshow(A, interpolation='bilinear')
+  #plt.imshow(A, interpolation='bicubic')
+
+  plt.scatter(A3[:,0], A3[:,1], s=A3[:,2], c=A3[:,3], alpha=1.0)
+
+  ##TODO PREKRYV
+
+  pl.savefig('result/neurons/nnmatrix.png')
+
+def draw( x, y, c ):
+
+  umat = read_data('.temp/umatrix.som');
+  cl = read_data('.temp/ClustersTrain.som');
+
+  arr = np.zeros((x,y))
+  for row in umat:
+    arr[ row[0] ][ row[1] ] = row[2]
+
+
+  arr2 = np.zeros((x,y))
+  for row in cl:
+    arr2[ row[1] ][ row[2] ] += 1
+
+
+  arr3 = np.zeros((x*y*C,4))
+  for row in cl:
+    arr3[ row[1] + row[2] * x + row[0] * x*y ][0] = row[1]
+    arr3[ row[1] + row[2] * x + row[0] * x*y ][1] = row[2]
+    arr3[ row[1] + row[2] * x + row[0] * x*y ][2] += 10
+    arr3[ row[1] + row[2] * x + row[0] * x*y ][3] = row[0]
+
+  rect( arr, arr2, arr3 )
+"""
 def drange(start, stop, step):
   r = start
   while r <= stop:
@@ -23,11 +69,11 @@ def drange(start, stop, step):
     r += step
 
 def ciara():
-  print 15 * '-'
+  print(15 * '-')
 
 def error( s ):
     ciara()
-    print "Error: " + s + "."
+    print("Error: " + s + ".")
     ciara()
     sys.exit(1)
 
@@ -49,7 +95,7 @@ def getShufflerCmd(f,rows,cols,is_names,is_clas,names,clas):
   return cmd
 
 def startProgramm(cmd):
-  print "Command to run:", cmd
+  print("Command to run:", cmd)
   err = os.system(cmd)
   if err != 0:
     error("bad return value of command: " + cmd)
@@ -62,7 +108,7 @@ def startProgrammDummy(cmd):
 
 def renameKeys(x):
    if type(x) is dict:
-     for key in x.keys():
+     for key in list(x.keys()):
        x[key.lower()]=x.pop(key)
        if type(x[key.lower()]) is dict or type(x[key.lower()]) is list:
        	  x[key.lower()]=renameKeys(x[key.lower()])
@@ -70,7 +116,7 @@ def renameKeys(x):
        for item in x:
            item = renameKeys(item)
    return x
-	
+
 
 def main():
 
@@ -101,7 +147,7 @@ def main():
   data_paths = data['data']['path']
   file_type = data['data']['file_type']
   delimiter = data['data']['delimiter']
-  cols = data['data']['columns']
+  cols = None
 
   #####PARAMETERS######
 
@@ -168,9 +214,9 @@ def main():
     else:
       files.append( path )
 
-  print "Processing files: "
+  print("Processing files: ")
   for f in files:
-    print "  " + f
+    print("  " + f)
     if delimiter != ' ':  #convert to " " delimiter
       os.system("sed  -i 's/" + delimiter + "/ /g' " + f)
 
@@ -259,6 +305,8 @@ def main():
 
     cmd = 'gnuplot ' + '.temp/neurons.gnuplot'
     startProgramm(cmd)
+
+    # draw(mapSizeX, mapSizeY , 10) # TODO change to real value of classes from 10.
 
     if web:
 

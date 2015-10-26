@@ -171,7 +171,7 @@ REP(i,SIZE_X)
         <div class=\"fit scroll small-3 columns\">\
             <div class=\"header\"> \
                 <h3>Neuron x: %d y: %d</h3>\
-                <h5><span id='h'>Reference vector</span></h5>\
+                <h5><span id='h'>Reference vector test</span></h5>\
                 <a href=\"../%d_%d/spectra.html\">X+</a> <a href=\"../%d_%d/spectra.html\">X-</a> \
                 <a href=\"../%d_%d/spectra.html\">Y+</a> <a href=\"../%d_%d/spectra.html\">Y-</a>\
             </div>\
