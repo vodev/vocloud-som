@@ -21,7 +21,6 @@ import matplotlib.pyplot as plt
 from matplotlib.gridspec import GridSpec
 import math
 from random import random
-"""
 def read_data( path ):
   return np.loadtxt(path, delimiter=' ')
 
@@ -61,7 +60,7 @@ def draw( x, y, c ):
     arr3[ row[1] + row[2] * x + row[0] * x*y ][3] = row[0]
 
   rect( arr, arr2, arr3 )
-"""
+
 def drange(start, stop, step):
   r = start
   while r <= stop:
@@ -76,6 +75,11 @@ def error( s ):
     print("Error: " + s + ".")
     ciara()
     sys.exit(1)
+
+def getCols(f):
+    with open(f, "r") as input_file:
+        line = input_file.readline()
+        return len(line.split(' '))
 
 def getRows( f ):
   os.system("wc -l "+f+" > .temp/wcl")
@@ -128,9 +132,6 @@ def main():
 
 
 
-  if 'RDF' in data and data['rdf']:
-    startProgramm("python3 /home/voadmin/RDF/runRF.py config.json")
-    return 0
   #####NAME############
 
   exp_name = data['name']
@@ -148,7 +149,6 @@ def main():
   file_type = data['data']['file_type']
   delimiter = data['data']['delimiter']
   cols = None
-
   #####PARAMETERS######
 
   topology= data['parameters']['topology']
@@ -230,21 +230,17 @@ def main():
     #cmd = getShufflerCmd(f,rows,cols,is_names,is_clas,names,clas)
     #startProgramm(cmd)
     for f in files:
+      cols = getCols(f)
       rows += getRows(f)
       cmd = 'cat ' + f + ' >> .temp/data.shuffle'       #change to stream.
       startProgrammDummy(cmd)
   else:
     cmd = 'echo "' + str(cols) + '" >> ./temp/data.shuffle'
     for f in files:
+      cols = getCols(f)
       rows += getRows(f)
       cmd = 'cat ' + f + ' >> .temp/data.shuffle'
       startProgrammDummy(cmd)
-
-  """  for map_size_x in drange( mapSizeX['from'] , mapSizeX['to'] , mapSizeX['step'] ):
-    for map_size_y in drange( mapSizeY['from'] , mapSizeY['to'] , mapSizeY['step']):
-      for rep in drange( dataRep['from'] , dataRep['to'] , dataRep['step']):
-        for learn_rate in drange( learningRate['from'] , learningRate['to'] , learningRate['step']):
-  """
 
   if visual: os.makedirs( 'result/neurons')
 
