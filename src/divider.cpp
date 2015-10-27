@@ -159,7 +159,7 @@ REP(i,SIZE_X)
     <link href=\"../../vendor/normalize.css\" rel=\"stylesheet\" type=\"text/css\">\
     <link href=\"../../vendor/foundation.min.css\" rel=\"stylesheet\" type=\"text/css\">\
     <link href=\"../../lib/style.css\" rel=\"stylesheet\" type=\"text/css\">\
-    <title>Stellar spectra</title>\
+    <title>SOM u-matrix</title>\
 </head>\
 \
 <body>\
@@ -171,26 +171,25 @@ REP(i,SIZE_X)
         <div class=\"fit scroll small-3 columns\">\
             <div class=\"header\"> \
                 <h3>Neuron x: %d y: %d</h3>\
-                <h5><span id='h'>Reference vector test</span></h5>\
-                <a href=\"../%d_%d/spectra.html\">X+</a> <a href=\"../%d_%d/spectra.html\">X-</a> \
-                <a href=\"../%d_%d/spectra.html\">Y+</a> <a href=\"../%d_%d/spectra.html\">Y-</a>\
+                <h5><span id='h'>Reference vector</span></h5>\
+               \
+                <p>&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp<a href=\"../%d_%d/spectra.html\">Y+</a></p>\
+                <p><a href=\"../%d_%d/spectra.html\">X-</a>  &nbsp   <a href=\"../../index.html\">HOME</a>  &nbsp      <a href=\"../%d_%d/spectra.html\">X+</a></p> \
+                <p>&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp<a href=\"../%d_%d/spectra.html\">Y-</a></p>\
             </div>\
-\
-            <p><a href=\"../../index.html\">HOME</a></p>\
 \
             <p class='sp' onclick=\"change(-1, 'Reference Vector', 'n_spectrum.txt')\">Display reference vector</p>\
 \
             <p class='sp' onclick=\"change(-1, 'All Associated Spectra', 'spectra.txt' )\">Display all spectra</p>\
             <div class=\"\">\
                 <ol id=\"sul\">\
-" , i,j,  min(i+1,SIZE_X-1) ,j , max(i-1,0),j, i,min(j+1, SIZE_Y-1), i, max(j-1,0));
+" , i,j,i,min(j+1, SIZE_Y-1), max(i-1,0),j,  min(i+1,SIZE_X-1) ,j , i, max(j-1,0));
 
     }
 
 
     REP(i,ROWS){
 
-      //cout << "kok" << endl;
       fscanf(nn.in, "%d%d%d", &clas, &x, &y );
       if (IS_NAME) fscanf(names.in, "%s", name);
       else strcpy( name , "no name" );
@@ -258,13 +257,13 @@ fprintf(phpFiles.in," \
     <link href=\"vendor/normalize.css\" rel=\"stylesheet\" type=\"text/css\">\
     <link href=\"vendor/foundation.min.css\" rel=\"stylesheet\" type=\"text/css\">\
 \
-    <title>Stellar spectra</title>\
+    <title>SOM U-matrix</title>\
 </head>\
 \
 <body>\
-    <h1>Stellar_spectra</h1>\
-    <img alt=\"nnmatrix\" class=\"down\"id=\"nn\" src=\"neurons/nnmatrix.png\" usemap=\"#nnmatrixmap\" height=\"446\" width=\"602\">\
-    <img alt=\"umatrix\" id=\"uu\" src=\"neurons/umatrix.png\" usemap=\"#umatrixmap\" height=\"446\" width=\"602\" >\
+    <h1>SOM U-matrix</h1>\
+    <img alt=\"nnmatrix\" class=\"down\"id=\"nn\" src=\"neurons/nnmatrix.png\" usemap=\"#nnmatrixmap\" height=\"1000\" width=\"1000\">\
+    <!--<img alt=\"umatrix\" id=\"uu\" src=\"neurons/umatrix.png\" usemap=\"#umatrixmap\" height=\"446\" width=\"602\" >-->\
 \
     <script type=\"text/javascript\">\
 	$('#nn').click(function(e)\
@@ -274,15 +273,13 @@ fprintf(phpFiles.in," \
     var top = event.offsetY?(event.offsetY):event.pageY \n \
     - $(this).offset().top; \
 \
-   left -= 62;\
-   var left_part = 436 / %d; \
-   left-= 0.75 * left_part; \
+   left -= 241;\
+   var left_part = 545.0 / %d.0;\
    var numX = Math.floor (( left / left_part)) ;\
 \
-   top -= 19;\
-   var top_part = 308 / %d;  \
-   top-= 0.25 * top_part; \
-   var numY = %d - Math.floor(( top / top_part ));\
+   top -= 103;\
+   var top_part = 545.0 / %d.0;  \
+   var numY = Math.floor(( top / top_part ));\
 \
    if(numX == -1) numX = 0; \
    if(numY == -1) numY = 0; \
@@ -316,7 +313,7 @@ fprintf(phpFiles.in," \
 </body>\
 </html> \
 "
-, SIZE_X+1, SIZE_Y+1, SIZE_Y-1,SIZE_X, SIZE_Y , SIZE_X+1, SIZE_Y+1, SIZE_Y-1, SIZE_X, SIZE_Y );
+, SIZE_X, SIZE_Y, SIZE_X, SIZE_Y , SIZE_X+1, SIZE_Y+1, SIZE_Y-1, SIZE_X, SIZE_Y );
  /*<div style=\"position:fixed;bottom:30px;left:30px;\"> \
 <h2>Go to coordinates:</h2>\
 <form action= \"display.php\" method=\"get\">\

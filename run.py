@@ -30,18 +30,19 @@ def rect( A, A2, A3 ):
   #plt.imshow(A, interpolation='nearest')
   plt.imshow(A, interpolation='bilinear')
   #plt.imshow(A, interpolation='bicubic')
-
-  plt.scatter(A3[:,0], A3[:,1], s=A3[:,2], c=A3[:,3], alpha=1.0)
-
-  ##TODO PREKRYV
-
+  
+  #sort in descending order of biggest circles, so all where visible. 
+  ind = A3[A3[:,2].argsort()[::-1]]
+  plt.scatter(ind[:,0], ind[:,1], s=ind[:,2], c=ind[:,3], alpha=1.0)
+  #plt.scatter(A3[:,0], A3[:,1], s=A3[:,2], c=A3[:,3], alpha=1.0)
+ 
   pl.savefig('result/neurons/nnmatrix.png')
 
 def draw( x, y, c ):
-
+ 
   umat = read_data('.temp/umatrix.som');
   cl = read_data('.temp/ClustersTrain.som');
-
+ 
   arr = np.zeros((x,y))
   for row in umat:
     arr[ row[0] ][ row[1] ] = row[2]
@@ -52,7 +53,7 @@ def draw( x, y, c ):
     arr2[ row[1] ][ row[2] ] += 1
 
 
-  arr3 = np.zeros((x*y*C,4))
+  arr3 = np.zeros((x*y*c,4))
   for row in cl:
     arr3[ row[1] + row[2] * x + row[0] * x*y ][0] = row[1]
     arr3[ row[1] + row[2] * x + row[0] * x*y ][1] = row[2]
@@ -288,7 +289,7 @@ def main():
     #os.system("mkdir -p " + head)
 
     cmd = 'gnuplot ' + '.temp/neurons.gnuplot'
-    startProgramm(cmd)
+    #startProgramm(cmd)
 
 
     cmd = PATH + '/bin/neuronsDrawer2 result/neurons/umatrix.png' + ' ' + str(mapSizeX) + \
@@ -300,9 +301,9 @@ def main():
     #os.system("mkdir -p " + head)
 
     cmd = 'gnuplot ' + '.temp/neurons.gnuplot'
-    startProgramm(cmd)
+    #startProgramm(cmd)
 
-    # draw(mapSizeX, mapSizeY , 10) # TODO change to real value of classes from 10.
+    draw(mapSizeX, mapSizeY , 10) # TODO change to real value of classes from 10.
 
     if web:
 

@@ -540,7 +540,7 @@ class SOM{
 
         ERR /= iter_num;
 
-        devider.fwriteNum( ERR, '\n' );
+        // devider.fwriteNum( ERR, '\n' );
 
 
         if (is_clas) delete classes;
