@@ -266,7 +266,7 @@ fprintf(phpFiles.in," \
     <!--<img alt=\"umatrix\" id=\"uu\" src=\"neurons/umatrix.png\" usemap=\"#umatrixmap\" height=\"446\" width=\"602\" >-->\
 \
     <script type=\"text/javascript\">\
-	$('#nn').click(function(e)\
+	$('#nn').click(function(event)\
 {   \
     var left = event.offsetX?(event.offsetX):event.pageX \n \
     - $(this).offset().left; \n \
