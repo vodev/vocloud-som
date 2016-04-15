@@ -252,7 +252,7 @@ fprintf(phpFiles.in," \
 <!DOCTYPE html>\
 <html>\
 <head>\
-\
+    <meta charset=\"utf-8\" />\
     <script src=\"vendor/jquery-1.11.0.min.js\"></script>\
     <link href=\"vendor/normalize.css\" rel=\"stylesheet\" type=\"text/css\">\
     <link href=\"vendor/foundation.min.css\" rel=\"stylesheet\" type=\"text/css\">\
@@ -268,17 +268,18 @@ fprintf(phpFiles.in," \
     <script type=\"text/javascript\">\
 	$('#nn').click(function(event)\
 {   \
+    var sizeMultiplicator = $(this).width() / 1000.0;\n \
     var left = event.offsetX?(event.offsetX):event.pageX \n \
     - $(this).offset().left; \n \
     var top = event.offsetY?(event.offsetY):event.pageY \n \
     - $(this).offset().top; \
 \
-   left -= 241;\
-   var left_part = 545.0 / %d.0;\
+   left -= 241 * sizeMultiplicator;\
+   var left_part = 545.0 / %d.0 * sizeMultiplicator;\
    var numX = Math.floor (( left / left_part)) ;\
 \
-   top -= 103;\
-   var top_part = 545.0 / %d.0;  \
+   top -= 103 * sizeMultiplicator;\
+   var top_part = 545.0 / %d.0 * sizeMultiplicator;  \
    var numY = Math.floor(( top / top_part ));\
 \
    if(numX == -1) numX = 0; \
