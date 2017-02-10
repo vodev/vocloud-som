@@ -189,16 +189,20 @@ def main():
 
     #####OPTIONAL_INFO###
 
-    opt = data['optional_info']
+    opt = data.get('optional_info')
+    if opt:
+        is_names = opt.get('names')
+        is_names = 1 if is_names else 0
+        names = opt['names_path']
 
-    is_names = opt['names']
-    is_names = 1 if is_names else 0
-    names = opt['names_path']
-
-    is_clas = opt['classes']
-    is_clas = 1 if is_clas else 0
-    clas = opt['classes_path']
-
+        is_clas = opt.get('classes')
+        is_clas = 1 if is_clas else 0
+        clas = opt['classes_path']
+    else:
+        is_names = 0
+        names = None
+        is_clas = 0
+        names = None
     #####EXCEPTIONS######
 
     if algo == "probing" and lrF != "exp_decay":
